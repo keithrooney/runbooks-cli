@@ -1,4 +1,4 @@
-package internal
+package runbook
 
 import (
 	"fmt"

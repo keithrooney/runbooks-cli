@@ -1,4 +1,4 @@
-package internal
+package apply
 
 import (
 	"bytes"
@@ -9,7 +9,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestExport(t *testing.T) {
+func TestApply(t *testing.T) {
 
 	directory := t.TempDir()
 
@@ -20,11 +20,11 @@ func TestExport(t *testing.T) {
 	assert.NoError(t, err)
 
 	stdout := new(bytes.Buffer)
-	rootCmd.SetOut(stdout)
+	Command.SetOut(stdout)
 
-	rootCmd.SetArgs([]string{"export", file.Name()})
+	Command.SetArgs([]string{file.Name()})
 
-	assert.NoError(t, rootCmd.Execute())
-	assert.Equal(t, fmt.Sprintf("Exporting %s ...\n", file.Name()), stdout.String())
+	assert.NoError(t, Command.Execute())
+	assert.Equal(t, fmt.Sprintf("Applying %s ...\n", file.Name()), stdout.String())
 
 }

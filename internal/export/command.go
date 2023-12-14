@@ -1,10 +1,11 @@
-package internal
+package export
 
 import (
+	"github.com/keithrooney/runbooks/cli/internal/runbook"
 	"github.com/spf13/cobra"
 )
 
-var exportCmd = &cobra.Command{
+var Command = &cobra.Command{
 	Use:           "export [flags] filename",
 	Short:         "Export the runbook.",
 	Args:          cobra.ExactArgs(1),
@@ -12,7 +13,7 @@ var exportCmd = &cobra.Command{
 	SilenceErrors: true,
 	RunE: func(cmd *cobra.Command, args []string) error {
 		filepath := args[0]
-		_, err := Load(filepath)
+		_, err := runbook.Load(filepath)
 		if err != nil {
 			return err
 		}
