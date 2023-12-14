@@ -8,8 +8,13 @@ var applyCmd = &cobra.Command{
 	Use:   "apply",
 	Short: "Apply the runbook",
 	Args:  cobra.ExactArgs(1),
-	Run: func(cmd *cobra.Command, args []string) {
-		file := args[0]
-		cmd.Printf("Applying %s ...\n", file)
+	RunE: func(cmd *cobra.Command, args []string) error {
+		filepath := args[0]
+		_, err := Load(filepath)
+		if err != nil {
+			return err
+		}
+		cmd.Printf("Applying %s ...\n", filepath)
+		return nil
 	},
 }
