@@ -15,7 +15,7 @@ func TestCommand(t *testing.T) {
 	file, err := os.CreateTemp(directory, "runbook-*.yml")
 	assert.NoError(t, err)
 
-	_, err = file.WriteString("title: \"This is our runbook\"")
+	_, err = file.WriteString("title: \"The application is crashing.\"\ndetails: \"This normally occurs when there is a resource leak of some description.\"")
 	assert.NoError(t, err)
 
 	stdout := new(bytes.Buffer)
@@ -25,7 +25,7 @@ func TestCommand(t *testing.T) {
 
 	assert.NoError(t, Command.Execute())
 
-	expected := "# This is our runbook\n\n"
+	expected := "# The application is crashing.\n\n## Details\nThis normally occurs when there is a resource leak of some description.\n\n"
 	actual := stdout.String()
 
 	assert.Equal(t, expected, actual)

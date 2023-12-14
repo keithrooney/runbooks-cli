@@ -10,6 +10,9 @@ import (
 
 const templ = `# {{ .Title }}
 
+## Details
+{{ .Details }}
+
 `
 
 var Command = &cobra.Command{
