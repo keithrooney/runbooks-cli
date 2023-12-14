@@ -33,7 +33,7 @@ func TestLoadFileDoesNotExist(t *testing.T) {
 	_, err := Load("foobar.txt")
 
 	assert.Error(t, err)
-	assert.Equal(t, "Error: file foobar.txt does not exist\n", err.Error())
+	assert.Equal(t, "Error: file does not exist\n", err.Error())
 
 }
 
@@ -48,6 +48,6 @@ func TestLoadInvalidFileFormat(t *testing.T) {
 	_, err = Load(file.Name())
 
 	assert.Error(t, err)
-	assert.Equal(t, fmt.Sprintf("Error: failed to parse file %s\n", file.Name()), err.Error())
+	assert.Equal(t, fmt.Sprintf("Error: unexpected file format\n"), err.Error())
 
 }
