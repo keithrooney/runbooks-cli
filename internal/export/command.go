@@ -11,8 +11,13 @@ import (
 const templ = `# {{ .Title }}
 
 ## Details
+
 {{ .Details }}
 
+## Mitigation
+{{ range $index, $element := .Mitigation.Steps }}
+{{ $index }}. {{ $element.Name }}
+{{ end }}
 `
 
 var Command = &cobra.Command{
