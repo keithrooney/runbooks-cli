@@ -1,0 +1,8 @@
+title: "The application is crashing"
+details: "This normally occurs when there is a resource leak of some description."
+mitigation:
+  steps:
+  - name: "ssh into the server"
+    command: "ssh hostname@ip"
+  - name: "restart the application"
+    command: "sudo systemctl restart runbooks"

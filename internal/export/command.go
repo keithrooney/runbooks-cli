@@ -1,6 +1,7 @@
 package export
 
 import (
+	_ "embed"
 	"errors"
 	"text/template"
 
@@ -8,17 +9,8 @@ import (
 	"github.com/spf13/cobra"
 )
 
-const templ = `# {{ .Title }}
-
-## Details
-
-{{ .Details }}
-
-## Mitigation
-{{ range $index, $element := .Mitigation.Steps }}
-{{ $index }}. {{ $element.Name }}
-{{ end }}
-`
+//go:embed templates/markdown.tpl
+var templ string
 
 var Command = &cobra.Command{
 	Use:           "export [flags] filename",

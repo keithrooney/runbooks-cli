@@ -10,43 +10,18 @@ import (
 
 func TestCommand(t *testing.T) {
 
-	directory := t.TempDir()
-
-	file, err := os.CreateTemp(directory, "runbook-*.yml")
-	assert.NoError(t, err)
-
-	body := `title: "The application is crashing."
-details: "This normally occurs when there is a resource leak of some description."
-mitigation:
-  steps:
-  - name: "ssh into the server"
-  - name: "restart the application"
-
-`
-
-	_, err = file.WriteString(body)
-	assert.NoError(t, err)
-
 	stdout := new(bytes.Buffer)
 	Command.SetOut(stdout)
 
-	Command.SetArgs([]string{file.Name()})
+	Command.SetArgs([]string{"testdata/runbook.yml"})
 
 	assert.NoError(t, Command.Execute())
 
-	expected := `# The application is crashing.
+	bytes, err := os.ReadFile("testdata/runbook.md")
 
-## Details
+	assert.NoError(t, err)
 
-This normally occurs when there is a resource leak of some description.
-
-## Mitigation
-
-0. ssh into the server
-
-1. restart the application
-
-`
+	expected := string(bytes)
 	actual := stdout.String()
 
 	assert.Equal(t, expected, actual)
