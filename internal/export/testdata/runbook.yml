@@ -1,5 +1,7 @@
 title: "The application is crashing"
 details: "This normally occurs when there is a resource leak of some description."
+impact: |
+  The application crashing will mean downtime for our customers.
 mitigation:
   steps:
   - name: "ssh into the server"
