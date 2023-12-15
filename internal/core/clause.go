@@ -12,14 +12,14 @@ import (
 )
 
 type Clause struct {
-	Shell string `yaml:"shell"`
+	Shell Shell `yaml:"shell"`
 }
 
 func (clause Clause) Evaluate() (bool, error) {
-	if clause.Shell == "" {
+	if clause.Shell.Command == "" {
 		return true, nil
 	}
-	src, err := syntax.NewParser().Parse(strings.NewReader(clause.Shell), "")
+	src, err := syntax.NewParser().Parse(strings.NewReader(clause.Shell.Command), "")
 	if err != nil {
 		return false, errors.New("Error: syntax error")
 	}

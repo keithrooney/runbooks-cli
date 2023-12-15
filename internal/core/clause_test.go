@@ -6,7 +6,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestExecuteUndefinedWhenReturnsTrue(t *testing.T) {
+func TestClauseExecuteUndefinedWhenReturnsTrue(t *testing.T) {
 
 	clause := Clause{}
 
@@ -17,7 +17,7 @@ func TestExecuteUndefinedWhenReturnsTrue(t *testing.T) {
 
 }
 
-func TestExecuteReturnsTrue(t *testing.T) {
+func TestClauseExecuteReturnsTrue(t *testing.T) {
 
 	commands := []string{
 		"echo 1",
@@ -30,7 +30,9 @@ func TestExecuteReturnsTrue(t *testing.T) {
 
 	for _, command := range commands {
 		clause := Clause{
-			Shell: command,
+			Shell: Shell{
+				Command: command,
+			},
 		}
 
 		executable, err := clause.Evaluate()
@@ -41,7 +43,7 @@ func TestExecuteReturnsTrue(t *testing.T) {
 
 }
 
-func TestExecuteReturnsFalse(t *testing.T) {
+func TestClauseExecuteReturnsFalse(t *testing.T) {
 
 	commands := []string{
 		"echo 0",
@@ -54,7 +56,9 @@ func TestExecuteReturnsFalse(t *testing.T) {
 
 	for _, command := range commands {
 		clause := Clause{
-			Shell: command,
+			Shell: Shell{
+				Command: command,
+			},
 		}
 
 		executable, err := clause.Evaluate()
@@ -65,10 +69,12 @@ func TestExecuteReturnsFalse(t *testing.T) {
 
 }
 
-func TestExecuteSyntaxError(t *testing.T) {
+func TestClauseExecuteSyntaxError(t *testing.T) {
 
 	clause := Clause{
-		Shell: "grep",
+		Shell: Shell{
+			Command: "grep",
+		},
 	}
 
 	executable, err := clause.Evaluate()
@@ -78,10 +84,12 @@ func TestExecuteSyntaxError(t *testing.T) {
 
 }
 
-func TestExecuteUnsupportedBooleanValue(t *testing.T) {
+func TestClauseExecuteUnsupportedBooleanValue(t *testing.T) {
 
 	clause := Clause{
-		Shell: "echo \"Truthy\"",
+		Shell: Shell{
+			Command: "echo \"Truthy\"",
+		},
 	}
 
 	executable, err := clause.Evaluate()

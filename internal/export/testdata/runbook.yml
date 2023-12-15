@@ -4,9 +4,12 @@ impact: |
   The application crashing will mean downtime for our customers.
 mitigation:
   when:
-    shell: "echo 1;"
+    shell:
+      command: "echo 1;"
   steps:
   - name: "ssh into the server"
-    shell: "ssh hostname@ip"
+    shell: 
+      command: "ssh hostname@ip"
   - name: "restart the application"
-    shell: "sudo systemctl restart runbooks"
+    shell:
+      command: "sudo systemctl restart runbooks"
