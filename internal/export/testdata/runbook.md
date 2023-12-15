@@ -11,6 +11,18 @@ The application crashing will mean downtime for our customers.
 
 ## Mitigation
 
+### When
+
+To execute the mitigation steps, the condition below must evaluate to `true` first.
+
+```
+echo 1;
+```
+
+### Steps
+
+Below are the steps that must be performed in order to mitigate this incident.
+
 0. ssh into the server
 
    ```text

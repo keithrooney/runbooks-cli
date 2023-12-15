@@ -13,11 +13,9 @@ import (
 var templ string
 
 var Command = &cobra.Command{
-	Use:           "export [flags] filename",
-	Short:         "Export the runbook.",
-	Args:          cobra.ExactArgs(1),
-	SilenceUsage:  true,
-	SilenceErrors: true,
+	Use:   "export [flags] filename",
+	Short: "Export the runbook.",
+	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		filepath := args[0]
 		runbook, err := core.Load(filepath)
