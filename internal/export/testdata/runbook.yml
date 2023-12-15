@@ -3,9 +3,7 @@ details: "This normally occurs when there is a resource leak of some description
 impact: |
   The application crashing will mean downtime for our customers.
 mitigation:
-  when:
-    shell:
-      command: "echo 1;"
+  when: "echo 1;"
   steps:
   - name: "ssh into the server"
     shell: 

@@ -1,12 +1,12 @@
 package core
 
 type Mitigation struct {
-	Steps  []Step `yaml:"steps"`
-	Clause Clause `yaml:"when"`
+	Steps     []Step    `yaml:"steps"`
+	Assertion Assertion `yaml:"when"`
 }
 
 func (mitigation Mitigation) Evaluate() (bool, error) {
-	return mitigation.Clause.Evaluate()
+	return mitigation.Assertion.Evaluate()
 }
 
 func (mitigation Mitigation) Execute(printf func(format string, i ...interface{})) error {

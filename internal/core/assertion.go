@@ -11,15 +11,13 @@ import (
 	"mvdan.cc/sh/v3/syntax"
 )
 
-type Clause struct {
-	Shell Shell `yaml:"shell"`
-}
+type Assertion string
 
-func (clause Clause) Evaluate() (bool, error) {
-	if clause.Shell.Command == "" {
+func (assertion Assertion) Evaluate() (bool, error) {
+	if assertion == "" {
 		return true, nil
 	}
-	src, err := syntax.NewParser().Parse(strings.NewReader(clause.Shell.Command), "")
+	src, err := syntax.NewParser().Parse(strings.NewReader(string(assertion)), "")
 	if err != nil {
 		return false, errors.New("Error: syntax error")
 	}

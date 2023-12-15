@@ -4,15 +4,13 @@ details: |
 impact: | 
   The application will not work as expected in it's current state.
 mitigation:
-  when:
-    shell:
-      command: |
-        if [ -f "/tmp/runbooks-cli/state.error" ];
-        then 
-          echo 1 
-        else 
-          echo 0 
-        fi
+  when: |
+    if [ -f "/tmp/runbooks-cli/state.error" ];
+    then 
+      echo 1 
+    else 
+      echo 0 
+    fi
   steps:
   - name: remove the directory if it exists
     shell:

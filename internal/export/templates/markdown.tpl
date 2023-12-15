@@ -15,7 +15,7 @@
 To execute the mitigation steps, the condition below must evaluate to `true` first.
 
 ```
-{{ .Mitigation.Clause.Shell.Command }}
+{{ .Mitigation.Assertion }}
 ```
 
 ### Steps
