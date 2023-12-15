@@ -4,10 +4,18 @@ details: |
 impact: | 
   The application will not work as expected in it's current state.
 mitigation:
+  when:
+    shell: |
+      if [ -f "/tmp/runbooks-cli/state.error" ];
+      then 
+        echo 1 
+      else 
+        echo 0 
+      fi
   steps:
   - name: remove the directory if it exists
-    shell: rm -rf /tmp/application
+    shell: rm -rf /tmp/runbooks-cli
   - name: create the directory
-    shell: mkdir -p /tmp/application
+    shell: mkdir -p /tmp/runbooks-cli
   - name: add the file
-    shell: echo "state has been refreshed" > /tmp/application/state
+    shell: echo "state has been refreshed" > /tmp/runbooks-cli/state

@@ -15,13 +15,15 @@ var Command = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		cmd.Printf("RUNBOOK [%s]\n\n", runbook.Title)
-		for _, step := range runbook.Mitigation.Steps {
-			cmd.Printf("STEP [%s] => [%s]\n\n", step.Name, step.Shell)
-			if err := step.Execute(); err != nil {
-				return err
-			}
+		applicable, err := runbook.Mitigation.Evaluate()
+		if err != nil {
+			return err
 		}
+		if applicable {
+			cmd.Printf("RUNBOOK [%s] => [applicable]\n\n", runbook.Title)
+			return runbook.Mitigation.Execute(cmd.Printf)
+		}
+		cmd.Printf("RUNBOOK [%s] => [skipped]\n\n", runbook.Title)
 		return nil
 	},
 }
