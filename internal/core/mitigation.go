@@ -1,4 +1,4 @@
-package runbook
+package core
 
 type Mitigation struct {
 	Steps  []Step `yaml:"steps"`

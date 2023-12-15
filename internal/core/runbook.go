@@ -1,4 +1,4 @@
-package runbook
+package core
 
 type Runbook struct {
 	Title      string     `yaml:"title"`

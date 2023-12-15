@@ -1,4 +1,4 @@
-package runbook
+package core
 
 import (
 	"testing"
