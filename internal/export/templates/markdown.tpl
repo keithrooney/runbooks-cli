@@ -13,6 +13,6 @@
 {{ $index }}. {{ $element.Name }}
 
    ```text
-   {{ $element.Command }}
+   {{ $element.Shell }}
    ```
 {{ end }}

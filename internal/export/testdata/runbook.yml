@@ -5,6 +5,6 @@ impact: |
 mitigation:
   steps:
   - name: "ssh into the server"
-    command: "ssh hostname@ip"
+    shell: "ssh hostname@ip"
   - name: "restart the application"
-    command: "sudo systemctl restart runbooks"
+    shell: "sudo systemctl restart runbooks"

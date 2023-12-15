@@ -6,16 +6,22 @@ import (
 )
 
 var Command = &cobra.Command{
-	Use:   "apply",
+	Use:   "apply [flags] filename",
 	Short: "Apply the runbook",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		filepath := args[0]
-		_, err := runbook.Load(filepath)
+		runbook, err := runbook.Load(filepath)
 		if err != nil {
 			return err
 		}
-		cmd.Printf("Applying %s ...\n", filepath)
+		cmd.Printf("RUNBOOK [%s]\n\n", runbook.Title)
+		for _, step := range runbook.Mitigation.Steps {
+			cmd.Printf("STEP [%s] => [%s]\n\n", step.Name, step.Shell)
+			if err := step.Execute(); err != nil {
+				return err
+			}
+		}
 		return nil
 	},
 }

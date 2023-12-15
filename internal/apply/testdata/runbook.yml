@@ -1,0 +1,13 @@
+title: the application state needs to be refreshed 
+details: | 
+  The applications state is out of sync, it must be refreshed.
+impact: | 
+  The application will not work as expected in it's current state.
+mitigation:
+  steps:
+  - name: remove the directory if it exists
+    shell: rm -rf /tmp/application
+  - name: create the directory
+    shell: mkdir -p /tmp/application
+  - name: add the file
+    shell: echo "state has been refreshed" > /tmp/application/state
