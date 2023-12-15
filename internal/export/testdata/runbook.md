@@ -34,3 +34,14 @@ Below are the steps that must be performed in order to mitigate this incident.
    ```text
    sudo systemctl restart runbooks
    ```
+
+   Verify the command completed as expected, asserting the below command returns `true` :-
+
+    ```text
+    if [ -d "/tmp/runbooks-cli" ];
+    then 
+      echo "false"
+    else 
+      echo "true"
+    fi
+    ```

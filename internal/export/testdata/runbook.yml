@@ -11,3 +11,10 @@ mitigation:
   - name: "restart the application"
     shell:
       command: "sudo systemctl restart runbooks"
+      assert: |
+        if [ -d "/tmp/runbooks-cli" ];
+        then 
+          echo "false"
+        else 
+          echo "true"
+        fi

@@ -27,4 +27,15 @@ Below are the steps that must be performed in order to mitigate this incident.
    ```text
    {{ $element.Shell.Command }}
    ```
+{{ if $element.Shell.Assertion }}
+   Verify the command completed as expected, asserting the below command returns `true` :-
+
+    ```text
+   {{- $string := printf "%s" $element.Shell.Assertion -}}
+   {{- $lines := split $string "\n" -}}
+   {{- range $line := $lines }}
+   {{- printf "\n    %s" $line -}}
+   {{- end -}}
+   ```
 {{ end }}
+{{- end -}}

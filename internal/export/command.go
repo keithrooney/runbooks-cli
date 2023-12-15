@@ -3,6 +3,7 @@ package export
 import (
 	_ "embed"
 	"errors"
+	"strings"
 	"text/template"
 
 	"github.com/keithrooney/runbooks/cli/internal/core"
@@ -22,7 +23,7 @@ var Command = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		T := template.Must(template.New("export").Parse(templ))
+		T := template.Must(template.New("export").Funcs(map[string]any{"split": strings.Split}).Parse(templ))
 		if err := T.Execute(cmd.OutOrStdout(), runbook); err != nil {
 			return errors.New("Error: unexpected template error\n")
 		}

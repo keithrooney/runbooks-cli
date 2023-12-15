@@ -15,9 +15,23 @@ mitigation:
   - name: remove the directory if it exists
     shell:
       command: rm -rf /tmp/runbooks-cli
+      assert: |
+        if [ -d "/tmp/runbooks-cli" ];
+        then 
+          echo "false"
+        else 
+          echo "true"
+        fi
   - name: create the directory
     shell:
       command: mkdir -p /tmp/runbooks-cli
+      assert: |
+        if [ -d "/tmp/runbooks-cli" ];
+        then 
+          echo "true"
+        else 
+          echo "false"
+        fi
   - name: add the file
     shell:
       command: echo "state has been refreshed" > /tmp/runbooks-cli/state
