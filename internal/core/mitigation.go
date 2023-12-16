@@ -5,13 +5,13 @@ import (
 )
 
 type Mitigation struct {
-	Steps     []Step    `yaml:"steps"`
-	Assertion Assertion `yaml:"when"`
+	Steps  []Step `yaml:"steps"`
+	Clause Clause `yaml:"when"`
 }
 
 func (mitigation Mitigation) Execute(printf func(format string, i ...interface{})) error {
 	runner, _ := interp.New()
-	applicable, err := mitigation.Assertion.Evaluate(runner)
+	applicable, err := mitigation.Clause.Evaluate(runner)
 	if err != nil {
 		return err
 	}

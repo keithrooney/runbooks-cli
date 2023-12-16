@@ -12,13 +12,13 @@ import (
 	"mvdan.cc/sh/v3/syntax"
 )
 
-type Assertion string
+type Clause string
 
-func (assertion Assertion) Evaluate(runner *interp.Runner) (bool, error) {
-	if assertion == "" {
+func (clause Clause) Evaluate(runner *interp.Runner) (bool, error) {
+	if clause == "" {
 		return true, nil
 	}
-	src, err := syntax.NewParser().Parse(strings.NewReader(string(assertion)), "")
+	src, err := syntax.NewParser().Parse(strings.NewReader(string(clause)), "")
 	if err != nil {
 		return false, fmt.Errorf("syntax error: %w\n", err)
 	}

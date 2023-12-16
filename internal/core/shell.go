@@ -11,8 +11,8 @@ import (
 )
 
 type Shell struct {
-	Command   string    `yaml:"command"`
-	Assertion Assertion `yaml:"assert"`
+	Command string `yaml:"command"`
+	Clause  Clause `yaml:"assert"`
 }
 
 func (shell Shell) Execute(runner *interp.Runner) error {
@@ -24,7 +24,7 @@ func (shell Shell) Execute(runner *interp.Runner) error {
 	if err != nil {
 		return fmt.Errorf("execution error: %w\n", err)
 	}
-	successful, err := shell.Assertion.Evaluate(runner)
+	successful, err := shell.Clause.Evaluate(runner)
 	if err != nil {
 		return fmt.Errorf("assertion error: %w\n", err)
 	}

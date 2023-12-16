@@ -15,7 +15,7 @@
 To execute the mitigation steps, the condition below must evaluate to `true` first.
 
 ```
-{{ .Mitigation.Assertion }}
+{{ .Mitigation.Clause }}
 ```
 
 ### Steps
@@ -27,11 +27,11 @@ Below are the steps that must be performed in order to mitigate this incident.
    ```text
    {{ $element.Shell.Command }}
    ```
-{{ if $element.Shell.Assertion }}
+{{ if $element.Shell.Clause }}
    Verify the command completed as expected, asserting the below command returns `true` :-
 
     ```text
-   {{- $string := printf "%s" $element.Shell.Assertion -}}
+   {{- $string := printf "%s" $element.Shell.Clause -}}
    {{- $lines := split $string "\n" -}}
    {{- range $line := $lines }}
    {{- printf "\n    %s" $line -}}

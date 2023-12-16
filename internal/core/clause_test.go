@@ -7,12 +7,12 @@ import (
 	"mvdan.cc/sh/v3/interp"
 )
 
-func TestUndefinedAssertionReturnsTrue(t *testing.T) {
+func TestEmptyClauseReturnsTrue(t *testing.T) {
 
-	var assertion Assertion = ""
+	var clause Clause = ""
 
 	runner, _ := interp.New()
-	executable, err := assertion.Evaluate(runner)
+	executable, err := clause.Evaluate(runner)
 
 	if assert.NoError(t, err) {
 		assert.True(t, executable)
@@ -20,9 +20,9 @@ func TestUndefinedAssertionReturnsTrue(t *testing.T) {
 
 }
 
-func TestAssertionReturnsTrue(t *testing.T) {
+func TestClauseReturnsTrue(t *testing.T) {
 
-	assertions := []Assertion{
+	clauses := []Clause{
 		"echo 1",
 		"echo \"t\"",
 		"echo \"T\"",
@@ -31,9 +31,9 @@ func TestAssertionReturnsTrue(t *testing.T) {
 		"echo \"True\"",
 	}
 
-	for _, assertion := range assertions {
+	for _, clause := range clauses {
 		runner, _ := interp.New()
-		executable, err := assertion.Evaluate(runner)
+		executable, err := clause.Evaluate(runner)
 		if assert.NoError(t, err) {
 			assert.True(t, executable)
 		}
@@ -41,9 +41,9 @@ func TestAssertionReturnsTrue(t *testing.T) {
 
 }
 
-func TestAssertionReturnsFalse(t *testing.T) {
+func TestClauseReturnsFalse(t *testing.T) {
 
-	assertions := []Assertion{
+	clauses := []Clause{
 		"echo 0",
 		"echo \"f\"",
 		"echo \"F\"",
@@ -52,9 +52,9 @@ func TestAssertionReturnsFalse(t *testing.T) {
 		"echo \"False\"",
 	}
 
-	for _, assertion := range assertions {
+	for _, clause := range clauses {
 		runner, _ := interp.New()
-		executable, err := assertion.Evaluate(runner)
+		executable, err := clause.Evaluate(runner)
 		if assert.NoError(t, err) {
 			assert.False(t, executable)
 		}
@@ -62,12 +62,12 @@ func TestAssertionReturnsFalse(t *testing.T) {
 
 }
 
-func TestAssertionSyntaxError(t *testing.T) {
+func TestClauseSyntaxError(t *testing.T) {
 
-	var assertion Assertion = "grep `"
+	var clause Clause = "grep `"
 
 	runner, _ := interp.New()
-	executable, err := assertion.Evaluate(runner)
+	executable, err := clause.Evaluate(runner)
 
 	if assert.Error(t, err) {
 		assert.False(t, executable)
@@ -76,12 +76,12 @@ func TestAssertionSyntaxError(t *testing.T) {
 
 }
 
-func TestAssertionTypeError(t *testing.T) {
+func TestClauseTypeError(t *testing.T) {
 
-	var assertion Assertion = "echo \"Truthy\""
+	var clause Clause = "echo \"Truthy\""
 
 	runner, _ := interp.New()
-	executable, err := assertion.Evaluate(runner)
+	executable, err := clause.Evaluate(runner)
 
 	if assert.Error(t, err) {
 		assert.False(t, executable)
