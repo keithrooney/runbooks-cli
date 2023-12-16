@@ -12,8 +12,9 @@ func TestUndefinedAssertionReturnsTrue(t *testing.T) {
 
 	executable, err := assertion.Evaluate()
 
-	assert.NoError(t, err)
-	assert.True(t, executable)
+	if assert.NoError(t, err) {
+		assert.True(t, executable)
+	}
 
 }
 
@@ -29,11 +30,10 @@ func TestAssertionReturnsTrue(t *testing.T) {
 	}
 
 	for _, assertion := range assertions {
-
 		executable, err := assertion.Evaluate()
-
-		assert.NoError(t, err)
-		assert.True(t, executable)
+		if assert.NoError(t, err) {
+			assert.True(t, executable)
+		}
 	}
 
 }
@@ -50,33 +50,36 @@ func TestAssertionReturnsFalse(t *testing.T) {
 	}
 
 	for _, assertion := range assertions {
-
 		executable, err := assertion.Evaluate()
-
-		assert.NoError(t, err)
-		assert.False(t, executable)
+		if assert.NoError(t, err) {
+			assert.False(t, executable)
+		}
 	}
 
 }
 
 func TestAssertionSyntaxError(t *testing.T) {
 
-	var assertion Assertion = "grep"
+	var assertion Assertion = "grep `"
 
 	executable, err := assertion.Evaluate()
 
-	assert.Error(t, err, "Error: syntax error")
-	assert.False(t, executable)
+	if assert.Error(t, err) {
+		assert.False(t, executable)
+		assert.Equal(t, "syntax error: 1:6: reached EOF without closing quote `\n", err.Error())
+	}
 
 }
 
-func TestAssertionUnsupportedBooleanValue(t *testing.T) {
+func TestAssertionTypeError(t *testing.T) {
 
 	var assertion Assertion = "echo \"Truthy\""
 
 	executable, err := assertion.Evaluate()
 
-	assert.Error(t, err, "Error: unsupported boolean value")
-	assert.False(t, executable)
+	if assert.Error(t, err) {
+		assert.False(t, executable)
+		assert.Equal(t, "type error: strconv.ParseBool: parsing \"Truthy\": invalid syntax\n", err.Error())
+	}
 
 }

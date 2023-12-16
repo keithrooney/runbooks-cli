@@ -1,7 +1,6 @@
 package core
 
 import (
-	"fmt"
 	"os"
 	"testing"
 
@@ -23,21 +22,23 @@ func TestLoad(t *testing.T) {
 	expected := Runbook{Title: "This is our runbook"}
 	actual, err := Load(file.Name())
 
-	assert.NoError(t, err)
-	assert.Equal(t, expected, *actual)
+	if assert.NoError(t, err) {
+		assert.Equal(t, expected, *actual)
+	}
 
 }
 
-func TestLoadFileDoesNotExist(t *testing.T) {
+func TestLoadFileErrorFileNotExist(t *testing.T) {
 
 	_, err := Load("foobar.txt")
 
-	assert.Error(t, err)
-	assert.Equal(t, "Error: file does not exist\n", err.Error())
+	if assert.Error(t, err) {
+		assert.Equal(t, "file error: stat foobar.txt: no such file or directory\n", err.Error())
+	}
 
 }
 
-func TestLoadInvalidFileFormat(t *testing.T) {
+func TestLoadFileErrorUnsupportedFormat(t *testing.T) {
 
 	directory := t.TempDir()
 	file, err := os.CreateTemp(directory, "test.txt")
@@ -47,7 +48,8 @@ func TestLoadInvalidFileFormat(t *testing.T) {
 
 	_, err = Load(file.Name())
 
-	assert.Error(t, err)
-	assert.Equal(t, fmt.Sprintf("Error: unexpected file format\n"), err.Error())
+	if assert.Error(t, err) {
+		assert.Equal(t, "file error: yaml: did not find expected node content\n", err.Error())
+	}
 
 }

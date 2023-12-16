@@ -2,7 +2,7 @@ package export
 
 import (
 	_ "embed"
-	"errors"
+	"fmt"
 	"strings"
 	"text/template"
 
@@ -25,7 +25,7 @@ var Command = &cobra.Command{
 		}
 		T := template.Must(template.New("export").Funcs(map[string]any{"split": strings.Split}).Parse(templ))
 		if err := T.Execute(cmd.OutOrStdout(), runbook); err != nil {
-			return errors.New("Error: unexpected template error\n")
+			return fmt.Errorf("template error: %w\n", err)
 		}
 		return nil
 	},

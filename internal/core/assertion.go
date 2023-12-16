@@ -3,7 +3,7 @@ package core
 import (
 	"bytes"
 	"context"
-	"errors"
+	"fmt"
 	"strconv"
 	"strings"
 
@@ -19,22 +19,22 @@ func (assertion Assertion) Evaluate() (bool, error) {
 	}
 	src, err := syntax.NewParser().Parse(strings.NewReader(string(assertion)), "")
 	if err != nil {
-		return false, errors.New("Error: syntax error")
+		return false, fmt.Errorf("syntax error: %w\n", err)
 	}
 	var stdio bytes.Buffer
 	var stderr bytes.Buffer
 	runner, _ := interp.New(
-		// The returns no error, hence why the error is ignored.
+		// The method below returns nil by default, hence why the error is ignored.
 		interp.StdIO(nil, &stdio, &stderr),
 	)
 	err = runner.Run(context.TODO(), src)
 	if err != nil {
-		return false, errors.New("Error: unsupported syntax")
+		return false, fmt.Errorf("execution error: %w\n", err)
 	}
 	output := stdio.String()
 	boolean, err := strconv.ParseBool(strings.TrimSpace(output))
 	if err != nil {
-		return false, errors.New("Error: unsupported boolean value")
+		return false, fmt.Errorf("type error: %w\n", err)
 	}
 	return boolean, nil
 }

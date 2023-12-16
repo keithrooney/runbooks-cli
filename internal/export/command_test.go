@@ -42,8 +42,9 @@ func TestCommandLoadFailure(t *testing.T) {
 
 	err = Command.Execute()
 
-	assert.Error(t, err)
-	assert.Equal(t, "Error: unexpected file format\n", err.Error())
+	if assert.Error(t, err) {
+		assert.Equal(t, "file error: yaml: found unexpected end of stream\n", err.Error())
+	}
 
 }
 
@@ -61,7 +62,8 @@ func TestCommandTemplateFailure(t *testing.T) {
 
 	err = Command.Execute()
 
-	assert.Error(t, err)
-	assert.Equal(t, "Error: unexpected template error\n", err.Error())
+	if assert.Error(t, err) {
+		assert.Equal(t, "template error: template: export:1:5: executing \"export\" at <.Title>: nil pointer evaluating *core.Runbook.Title\n", err.Error())
+	}
 
 }

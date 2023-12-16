@@ -21,11 +21,13 @@ func TestShellExecute(t *testing.T) {
 func TestShellExecuteSyntaxError(t *testing.T) {
 
 	shell := Shell{
-		Command: "grep",
+		Command: "grep `",
 	}
 
 	err := shell.Execute()
 
-	assert.Error(t, err, "Error: syntax error")
+	if assert.Error(t, err) {
+		assert.Equal(t, "syntax error: 1:6: reached EOF without closing quote `\n", err.Error())
+	}
 
 }

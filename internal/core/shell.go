@@ -3,6 +3,7 @@ package core
 import (
 	"context"
 	"errors"
+	"fmt"
 	"strings"
 
 	"mvdan.cc/sh/v3/interp"
@@ -17,16 +18,19 @@ type Shell struct {
 func (shell Shell) Execute() error {
 	file, err := syntax.NewParser().Parse(strings.NewReader(shell.Command), "")
 	if err != nil {
-		return errors.New("Error: syntax error")
+		return fmt.Errorf("syntax error: %w\n", err)
 	}
 	runner, _ := interp.New() // No options are provided, so no errors are returned.
 	err = runner.Run(context.TODO(), file)
 	if err != nil {
-		return errors.New("Error: ")
+		return fmt.Errorf("execution error: %w\n", err)
 	}
 	successful, err := shell.Assertion.Evaluate()
-	if err != nil || !successful {
-		return errors.New("Error: assert failed")
+	if err != nil {
+		return fmt.Errorf("assertion error: %w\n", err)
+	}
+	if !successful {
+		return errors.New("assertion failure\n")
 	}
 	return nil
 }
