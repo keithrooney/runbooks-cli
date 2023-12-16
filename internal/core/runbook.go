@@ -6,3 +6,8 @@ type Runbook struct {
 	Impact     string     `yaml:"impact"`
 	Mitigation Mitigation `yaml:"mitigation"`
 }
+
+func (runbook *Runbook) Execute(printf func(format string, i ...interface{})) error {
+	printf("RUNBOOK [%s]\n\n", runbook.Title)
+	return runbook.Mitigation.Execute(printf)
+}

@@ -4,13 +4,15 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"mvdan.cc/sh/v3/interp"
 )
 
 func TestUndefinedAssertionReturnsTrue(t *testing.T) {
 
 	var assertion Assertion = ""
 
-	executable, err := assertion.Evaluate()
+	runner, _ := interp.New()
+	executable, err := assertion.Evaluate(runner)
 
 	if assert.NoError(t, err) {
 		assert.True(t, executable)
@@ -30,7 +32,8 @@ func TestAssertionReturnsTrue(t *testing.T) {
 	}
 
 	for _, assertion := range assertions {
-		executable, err := assertion.Evaluate()
+		runner, _ := interp.New()
+		executable, err := assertion.Evaluate(runner)
 		if assert.NoError(t, err) {
 			assert.True(t, executable)
 		}
@@ -50,7 +53,8 @@ func TestAssertionReturnsFalse(t *testing.T) {
 	}
 
 	for _, assertion := range assertions {
-		executable, err := assertion.Evaluate()
+		runner, _ := interp.New()
+		executable, err := assertion.Evaluate(runner)
 		if assert.NoError(t, err) {
 			assert.False(t, executable)
 		}
@@ -62,7 +66,8 @@ func TestAssertionSyntaxError(t *testing.T) {
 
 	var assertion Assertion = "grep `"
 
-	executable, err := assertion.Evaluate()
+	runner, _ := interp.New()
+	executable, err := assertion.Evaluate(runner)
 
 	if assert.Error(t, err) {
 		assert.False(t, executable)
@@ -75,7 +80,8 @@ func TestAssertionTypeError(t *testing.T) {
 
 	var assertion Assertion = "echo \"Truthy\""
 
-	executable, err := assertion.Evaluate()
+	runner, _ := interp.New()
+	executable, err := assertion.Evaluate(runner)
 
 	if assert.Error(t, err) {
 		assert.False(t, executable)

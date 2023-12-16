@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"fmt"
+	"io"
 	"strconv"
 	"strings"
 
@@ -13,7 +14,7 @@ import (
 
 type Assertion string
 
-func (assertion Assertion) Evaluate() (bool, error) {
+func (assertion Assertion) Evaluate(runner *interp.Runner) (bool, error) {
 	if assertion == "" {
 		return true, nil
 	}
@@ -23,11 +24,13 @@ func (assertion Assertion) Evaluate() (bool, error) {
 	}
 	var stdio bytes.Buffer
 	var stderr bytes.Buffer
-	runner, _ := interp.New(
-		// The method below returns nil by default, hence why the error is ignored.
-		interp.StdIO(nil, &stdio, &stderr),
-	)
+	if err := reconfigure(runner, nil, &stdio, &stderr); err != nil {
+		return false, err
+	}
 	err = runner.Run(context.TODO(), src)
+	if err := reconfigure(runner, nil, nil, nil); err != nil {
+		return false, err
+	}
 	if err != nil {
 		return false, fmt.Errorf("execution error: %w\n", err)
 	}
@@ -37,4 +40,12 @@ func (assertion Assertion) Evaluate() (bool, error) {
 		return false, fmt.Errorf("type error: %w\n", err)
 	}
 	return boolean, nil
+}
+
+func reconfigure(runner *interp.Runner, in io.Reader, out, err io.Writer) error {
+	fn := interp.StdIO(in, out, err)
+	if err := fn(runner); err != nil {
+		return err
+	}
+	return nil
 }

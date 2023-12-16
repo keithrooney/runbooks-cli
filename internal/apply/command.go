@@ -15,15 +15,6 @@ var Command = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		applicable, err := runbook.Mitigation.Evaluate()
-		if err != nil {
-			return err
-		}
-		if applicable {
-			cmd.Printf("RUNBOOK [%s] => [applicable]\n\n", runbook.Title)
-			return runbook.Mitigation.Execute(cmd.Printf)
-		}
-		cmd.Printf("RUNBOOK [%s] => [skipped]\n\n", runbook.Title)
-		return nil
+		return runbook.Execute(cmd.Printf)
 	},
 }

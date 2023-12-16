@@ -4,6 +4,7 @@ import (
 	"testing"
 
 	"github.com/stretchr/testify/assert"
+	"mvdan.cc/sh/v3/interp"
 )
 
 func TestShellExecute(t *testing.T) {
@@ -12,7 +13,8 @@ func TestShellExecute(t *testing.T) {
 		Command: "echo 1;",
 	}
 
-	err := shell.Execute()
+	runner, _ := interp.New()
+	err := shell.Execute(runner)
 
 	assert.NoError(t, err)
 
@@ -24,7 +26,8 @@ func TestShellExecuteSyntaxError(t *testing.T) {
 		Command: "grep `",
 	}
 
-	err := shell.Execute()
+	runner, _ := interp.New()
+	err := shell.Execute(runner)
 
 	if assert.Error(t, err) {
 		assert.Equal(t, "syntax error: 1:6: reached EOF without closing quote `\n", err.Error())

@@ -12,9 +12,12 @@ mitigation:
       echo 0 
     fi
   steps:
+  - name: export required variables
+    shell: 
+      command: "APPLICATION_DIRECTORY=/tmp/runbooks-cli"
   - name: remove the directory if it exists
     shell:
-      command: rm -rf /tmp/runbooks-cli
+      command: rm -rf $APPLICATION_DIRECTORY
       assert: |
         if [ -d "/tmp/runbooks-cli" ];
         then 
@@ -24,9 +27,9 @@ mitigation:
         fi
   - name: create the directory
     shell:
-      command: mkdir -p /tmp/runbooks-cli
+      command: mkdir -p $APPLICATION_DIRECTORY
       assert: |
-        if [ -d "/tmp/runbooks-cli" ];
+        if [ -d "$APPLICATION_DIRECTORY" ];
         then 
           echo "true"
         else 
@@ -34,4 +37,4 @@ mitigation:
         fi
   - name: add the file
     shell:
-      command: echo "state has been refreshed" > /tmp/runbooks-cli/state
+      command: echo "state has been refreshed" > $APPLICATION_DIRECTORY/state
