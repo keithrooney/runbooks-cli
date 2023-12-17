@@ -10,11 +10,6 @@ var Command = &cobra.Command{
 	Short: "Apply the runbook",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		filepath := args[0]
-		runbook, err := core.Load(filepath)
-		if err != nil {
-			return err
-		}
-		return runbook.Apply(cmd.OutOrStdout())
+		return core.Apply(args[0], cmd.OutOrStdout())
 	},
 }

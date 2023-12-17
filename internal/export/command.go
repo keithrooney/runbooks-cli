@@ -12,11 +12,6 @@ var Command = &cobra.Command{
 	Short: "Export the runbook.",
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		filepath := args[0]
-		runbook, err := core.Load(filepath)
-		if err != nil {
-			return err
-		}
-		return runbook.Export(cmd.OutOrStdout())
+		return core.Export(args[0], cmd.OutOrStdout())
 	},
 }
