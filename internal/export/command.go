@@ -2,16 +2,10 @@ package export
 
 import (
 	_ "embed"
-	"fmt"
-	"strings"
-	"text/template"
 
 	"github.com/keithrooney/runbooks/cli/internal/core"
 	"github.com/spf13/cobra"
 )
-
-//go:embed templates/markdown.tpl
-var templ string
 
 var Command = &cobra.Command{
 	Use:   "export [flags] filename",
@@ -23,10 +17,6 @@ var Command = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		T := template.Must(template.New("export").Funcs(map[string]any{"split": strings.Split}).Parse(templ))
-		if err := T.Execute(cmd.OutOrStdout(), runbook); err != nil {
-			return fmt.Errorf("template error: %w\n", err)
-		}
-		return nil
+		return runbook.Export(cmd.OutOrStdout())
 	},
 }

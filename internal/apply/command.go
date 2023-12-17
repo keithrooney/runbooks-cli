@@ -15,6 +15,6 @@ var Command = &cobra.Command{
 		if err != nil {
 			return err
 		}
-		return runbook.Apply(cmd.Printf)
+		return runbook.Apply(cmd.OutOrStdout())
 	},
 }
