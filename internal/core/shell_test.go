@@ -9,9 +9,7 @@ import (
 
 func TestShellExecute(t *testing.T) {
 
-	shell := Shell{
-		Command: "echo 1;",
-	}
+	shell := Shell("echo 1;")
 
 	runner, _ := interp.New()
 	err := shell.Execute(runner)
@@ -22,9 +20,7 @@ func TestShellExecute(t *testing.T) {
 
 func TestShellExecuteSyntaxError(t *testing.T) {
 
-	shell := Shell{
-		Command: "grep `",
-	}
+	shell := Shell("grep `")
 
 	runner, _ := interp.New()
 	err := shell.Execute(runner)

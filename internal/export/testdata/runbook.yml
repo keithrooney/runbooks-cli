@@ -1,20 +1,18 @@
 title: "The application is crashing"
 details: "This normally occurs when there is a resource leak of some description."
-impact: |
-  The application crashing will mean downtime for our customers.
+impact: The application crashing will mean downtime for our customers.
 mitigation:
   when: "echo 1;"
   steps:
   - name: "ssh into the server"
-    shell: 
-      command: "ssh hostname@ip"
+    shell: "ssh hostname@ip"
   - name: "restart the application"
-    shell:
-      command: "sudo systemctl restart runbooks"
-      assert: |
-        if [ -d "/tmp/runbooks-cli" ];
-        then 
-          echo "false"
-        else 
-          echo "true"
-        fi
+    shell: "sudo systemctl restart runbooks"
+  - name: "verify the application has restarted"
+    assert: |
+      if [ -d "/tmp/runbooks-cli" ];
+      then 
+        echo "false"
+      else 
+        echo "true"
+      fi

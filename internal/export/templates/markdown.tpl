@@ -14,7 +14,7 @@
 
 To execute the mitigation steps, the condition below must evaluate to `true` first.
 
-```
+```text
 {{ .Mitigation.Clause }}
 ```
 
@@ -25,17 +25,10 @@ Below are the steps that must be performed in order to mitigate this incident.
 {{ $index }}. {{ $element.Name }}
 
    ```text
-   {{ $element.Shell.Command }}
-   ```
-{{ if $element.Shell.Clause }}
-   Verify the command completed as expected, asserting the below command returns `true` :-
-
-    ```text
-   {{- $string := printf "%s" $element.Shell.Clause -}}
+   {{- $string := printf "%s" $element.Command -}}
    {{- $lines := split $string "\n" -}}
-   {{- range $line := $lines }}
-   {{- printf "\n    %s" $line -}}
-   {{- end -}}
+   {{- range $line := $lines -}}
+   {{ printf "\n    %s" $line }}
+   {{- end }}
    ```
-{{ end }}
-{{- end -}}
+{{ end -}}

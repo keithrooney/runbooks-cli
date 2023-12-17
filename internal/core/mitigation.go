@@ -19,7 +19,7 @@ func (mitigation Mitigation) Execute(printf func(format string, i ...interface{}
 		return nil
 	}
 	for _, step := range mitigation.Steps {
-		printf("STEP [%s] => [%s]\n\n", step.Name, step.Shell)
+		printf("STEP [%s] => [%s]\n\n", step.Name, step.Command)
 		if err := step.Execute(runner); err != nil {
 			return err
 		}
