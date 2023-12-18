@@ -20,10 +20,14 @@ func TestApply(t *testing.T) {
 
 	assert.NoError(t, Command.Execute())
 
-	bytes, err := os.ReadFile("/tmp/runbooks-cli/state")
+	bytes, err := os.ReadFile("/tmp/runbooks-cli/state.ok")
 
-	assert.NoError(t, err)
+	if assert.NoError(t, err) {
+		assert.Equal(t, "state has been refreshed\n", string(bytes))
+	}
 
-	assert.Equal(t, "state has been refreshed\n", string(bytes))
+	_, err = os.Stat("/tmp/runbooks-cli/state.error")
+
+	assert.Error(t, err)
 
 }

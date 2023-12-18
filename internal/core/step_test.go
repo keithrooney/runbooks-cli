@@ -40,6 +40,22 @@ func TestStepUnmarshallAssertCommand(t *testing.T) {
 
 }
 
+func TestStepUnmarshallIncludeCommand(t *testing.T) {
+
+	bytes, err := os.ReadFile("testdata/include.yml")
+
+	assert.NoError(t, err)
+
+	step := Step{}
+	err = yaml.Unmarshal(bytes, &step)
+
+	if assert.NoError(t, err) {
+		_, ok := step.Command.(Include)
+		assert.True(t, ok)
+	}
+
+}
+
 func TestStepUnmarshallUnsupportedCommand(t *testing.T) {
 
 	bytes, err := os.ReadFile("testdata/unsupported.yml")

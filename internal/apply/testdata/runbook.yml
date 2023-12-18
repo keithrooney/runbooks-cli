@@ -14,25 +14,15 @@ mitigation:
   steps:
   - name: export required variables
     shell: "APPLICATION_DIRECTORY=/tmp/runbooks-cli"
-  - name: remove the directory if it exists
-    shell: rm -rf $APPLICATION_DIRECTORY
-  - name: verify the directory has been removed 
-    assert: |
-      if [ -d "/tmp/runbooks-cli" ];
-      then 
-        echo "false"
-      else 
-        echo "true"
-      fi
-  - name: create the directory
-    shell: mkdir -p $APPLICATION_DIRECTORY
-  - name: verify the directory has been recreated
-    assert: |
-      if [ -d "$APPLICATION_DIRECTORY" ];
-      then 
-        echo "true"
-      else 
-        echo "false"
-      fi
   - name: add the file
-    shell: echo "state has been refreshed" > $APPLICATION_DIRECTORY/state
+    shell: echo "state has been refreshed" > $APPLICATION_DIRECTORY/state.ok
+  - name: verify the file has been renamed
+    assert: |
+      if [ -f "$APPLICATION_DIRECTORY/state.ok" ];
+      then 
+        echo "true"
+      else 
+        echo "false"
+      fi
+  - name: destroy the file
+    include: "./testdata/other.yml"

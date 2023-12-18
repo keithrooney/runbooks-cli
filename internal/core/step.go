@@ -25,6 +25,8 @@ func (step *Step) UnmarshalYAML(unmarshal func(interface{}) error) error {
 		step.Command = Shell(cmd)
 	} else if cmd, ok := fields["assert"]; ok {
 		step.Command = Assert(cmd)
+	} else if cmd, ok := fields["include"]; ok {
+		step.Command = Include(cmd)
 	} else {
 		return fmt.Errorf("unsupported command\n")
 	}

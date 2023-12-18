@@ -16,3 +16,5 @@ mitigation:
       else 
         echo "true"
       fi
+  - name: "notify third party services of changes"
+    include: "./testdata/notifications.yml"

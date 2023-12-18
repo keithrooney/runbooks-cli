@@ -1,0 +1,7 @@
+title: the application error file has to be removed
+mitigation:
+  steps:
+  - name: export required variables
+    shell: "APPLICATION_DIRECTORY=/tmp/runbooks-cli"  
+  - name: remove the error file
+    shell: rm $APPLICATION_DIRECTORY/state.error

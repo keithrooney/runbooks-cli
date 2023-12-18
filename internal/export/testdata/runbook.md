@@ -45,3 +45,9 @@ Below are the steps that must be performed in order to mitigate this incident.
     fi
     
    ```
+
+3. notify third party services of changes
+
+   ```text
+    ./testdata/notifications.yml
+   ```

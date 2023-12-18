@@ -2,12 +2,11 @@ package core
 
 import (
 	"fmt"
-	"io"
 
 	"mvdan.cc/sh/v3/interp"
 )
 
-func Apply(file string, writer io.Writer) error {
+func Apply(file string) error {
 	runbook, err := Load(file)
 	if err != nil {
 		return err
@@ -20,9 +19,9 @@ func Apply(file string, writer io.Writer) error {
 	if !applicable {
 		return nil
 	}
-	fmt.Fprintf(writer, "RUNBOOK [%s]\n\n", runbook.Title)
+	fmt.Printf("RUNBOOK [%s]\n\n", runbook.Title)
 	for _, step := range runbook.Mitigation.Steps {
-		fmt.Fprintf(writer, "STEP [%s]\n\n", step.Name)
+		fmt.Printf("STEP [%s]\n\n", step.Name)
 		if err := step.Execute(runner); err != nil {
 			return err
 		}
