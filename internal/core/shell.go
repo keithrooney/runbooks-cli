@@ -22,3 +22,7 @@ func (shell Shell) Execute(runner *interp.Runner) error {
 	}
 	return nil
 }
+
+func (shell Shell) Format(options FormatOptions) string {
+	return Format(string(shell), options)
+}

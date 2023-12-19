@@ -4,7 +4,6 @@ import (
 	_ "embed"
 	"fmt"
 	"io"
-	"os"
 	"strings"
 	"text/template"
 )
@@ -21,10 +20,13 @@ func Export(file string, writer io.Writer) error {
 		Must(template.New("export").
 			Funcs(map[string]any{
 				"split": strings.Split,
-				"stat":  os.Stat,
 			}).
 			Parse(exportTemplate))
-	if err := T.Execute(writer, runbook); err != nil {
+	vars := map[string]interface{}{
+		"Runbook":       runbook,
+		"FormatOptions": FormatOptions{Indentation: 4},
+	}
+	if err := T.Execute(writer, vars); err != nil {
 		return fmt.Errorf("template error: %w\n", err)
 	}
 	return nil

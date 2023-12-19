@@ -49,3 +49,7 @@ func reconfigure(runner *interp.Runner, in io.Reader, out, err io.Writer) error 
 	}
 	return nil
 }
+
+func (clause Clause) Format(options FormatOptions) string {
+	return Format(string(clause), options)
+}

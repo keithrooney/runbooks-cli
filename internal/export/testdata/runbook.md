@@ -24,30 +24,29 @@ Below are the steps that must be performed in order to mitigate this incident.
 
 0. ssh into the server
 
-   ```text
+    ```text
     ssh hostname@ip
-   ```
+    ```
 
 1. restart the application
 
-   ```text
+    ```text
     sudo systemctl restart runbooks
-   ```
+    ```
 
 2. verify the application has restarted
 
-   ```text
+    ```text
     if [ -d "/tmp/runbooks-cli" ];
     then 
       echo "false"
     else 
       echo "true"
     fi
-    
-   ```
+    ```
 
 3. notify third party services of changes
 
-   ```text
-    ./testdata/notifications.yml
-   ```
+    ```text
+    testdata/notifications.md
+    ```

@@ -20,3 +20,7 @@ func (assert Assert) Execute(runner *interp.Runner) error {
 	}
 	return nil
 }
+
+func (assert Assert) Format(options FormatOptions) string {
+	return Format(string(assert), options)
+}
