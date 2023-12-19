@@ -12,11 +12,11 @@ func TestExport(t *testing.T) {
 
 	writer := new(bytes.Buffer)
 
-	err := Export("testdata/runbook.yml", writer)
+	err := Export("testdata/export.yml", writer)
 
 	require.NoError(t, err)
 
-	bytes, err := os.ReadFile("testdata/runbook.md")
+	bytes, err := os.ReadFile("testdata/export.md")
 
 	require.NoError(t, err)
 
