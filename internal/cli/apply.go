@@ -1,11 +1,11 @@
-package apply
+package cli
 
 import (
 	"github.com/keithrooney/runbooks/cli/internal/core"
 	"github.com/spf13/cobra"
 )
 
-var Command = &cobra.Command{
+var applyCmd = &cobra.Command{
 	Use:   "apply [flags] filename",
 	Short: "Apply the runbook",
 	Args:  cobra.ExactArgs(1),

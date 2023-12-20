@@ -1,4 +1,4 @@
-package export
+package cli
 
 import (
 	_ "embed"
@@ -7,7 +7,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var Command = &cobra.Command{
+var exportCmd = &cobra.Command{
 	Use:   "export [flags] filename",
 	Short: "Export the runbook.",
 	Args:  cobra.ExactArgs(1),
