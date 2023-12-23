@@ -3,9 +3,11 @@ details: |
   The applications state is out of sync, it must be refreshed.
 impact: | 
   The application will not work as expected in it's current state.
+parameters:
+- name: directory
 mitigation:
   when: |
-    if [ -f "/tmp/runbooks-cli/state.error" ];
+    if [ -f "$directory/state.error" ];
     then 
       echo 1 
     else 
@@ -13,7 +15,7 @@ mitigation:
     fi
   steps:
   - name: export required variables
-    shell: "APPLICATION_DIRECTORY=/tmp/runbooks-cli"
+    shell: "APPLICATION_DIRECTORY=$directory"
   - name: add the file
     shell: echo "state has been refreshed" > $APPLICATION_DIRECTORY/state.ok
   - name: verify the file has been renamed

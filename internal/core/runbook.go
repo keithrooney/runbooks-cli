@@ -9,4 +9,5 @@ type Runbook struct {
 	Details    string     `yaml:"details"`
 	Impact     string     `yaml:"impact"`
 	Mitigation Mitigation `yaml:"mitigation"`
+	Parameters Parameters `yaml:"parameters"`
 }
